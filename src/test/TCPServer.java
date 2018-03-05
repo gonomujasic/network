@@ -19,6 +19,9 @@ public class TCPServer {
 			//1. 서버소켓 생성
 			serverSocket = new ServerSocket();
 			
+			InetSocketAddress isa = new InetSocketAddress(InetAddress.getLocalHost(),5000);
+			
+			
 			//2. 바인딩(Binding)
 			String localhostAddress = InetAddress.getLocalHost().getHostAddress();
 			serverSocket.bind( new InetSocketAddress(localhostAddress, SERVER_PORT) );
@@ -26,12 +29,13 @@ public class TCPServer {
 			
 			//3. 연결 요청 기다림(accept)
 			Socket socket = serverSocket.accept(); // blocking
-			
+
 			//4. 연결 성공
 			InetSocketAddress remoteSocketAddress = 
 					(InetSocketAddress)socket.getRemoteSocketAddress();
 			int remoteHostPort = remoteSocketAddress.getPort();
 			String remoteHostAddress = remoteSocketAddress.getAddress().getHostAddress();
+			
 			System.out.println( "[server] connected from " + remoteHostAddress + ":" + remoteHostPort );
 			
 			try {

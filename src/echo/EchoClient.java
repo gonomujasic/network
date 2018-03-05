@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class EchoClient {
-	private static final String SERVER_IP = "192.168.1.38";
+	private static final String SERVER_IP = "192.168.1.13";
 	private static final int SERVER_PORT = 6000;
 	
 	public static void main(String[] args) {
@@ -27,8 +27,8 @@ public class EchoClient {
 		
 			while( true ) {
 				System.out.print( ">>" );
-				String message = scanner.nextLine();
 				
+				String message = scanner.nextLine();
 				if( "exit".equals( message ) ) {
 					break;
 				}
@@ -37,7 +37,7 @@ public class EchoClient {
 				
 				String echoMessage = br.readLine();
 				if( echoMessage == null ) {
-					System.out.println( "]client] disconnected by server" );
+					System.out.println( "[client] disconnected by server" );
 					break;
 				}
 				

@@ -1,8 +1,10 @@
 package echo;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -25,11 +27,14 @@ public class EchoServerReceiveThread extends Thread {
 		
 		try {
 			//5. I/O Stream 받아오기
-			InputStream is = socket.getInputStream();
-			OutputStream os = socket.getOutputStream();
+			/*InputStream is = socket.getInputStream();
+			OutputStream os = socket.getOutputStream();*/
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			
 			while( true ) {
-				//6. 데이터 읽기(read)
+/*				//6. 데이터 읽기(read)
 				byte[] buffer = new byte[256];
 				int readByteCount = is.read( buffer ); //Blocking
 				
@@ -42,7 +47,12 @@ public class EchoServerReceiveThread extends Thread {
 				consoleLog( "received:" + data );
 			
 				//7. 데이터 쓰기
-				os.write( data.getBytes( "utf-8" ) );
+				os.write( data.getBytes( "utf-8" ) );*/
+				String data = br.readLine();
+				consoleLog("received: "+data);
+				bw.write(data+"\n");
+				bw.flush();
+				
 			}
 		} catch(SocketException e) {
 			// 상대편이 정상적으로 소켁을 닫지 않고 종료 한 경우
